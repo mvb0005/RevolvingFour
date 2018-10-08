@@ -1,0 +1,21 @@
+﻿
+<div class="row">
+    <div class="card m-3">
+        <div class="form-group m-3">
+            <label for="channel">Channel</label>
+            <input type="text" class="form-control" id="channel" />
+        </div>
+        <button id="btnChannel" class="m-3 btn btn-primary">Submit</button>
+    </div>
+    <div class="card m-3">
+        <div class="form-group m-3">
+            <label for="Broadcast">Broadcast</label>
+            <input type="text" class="form-control" id="broadcast" />
+        </div>
+        <button id="btnBroadcast" class="m-3 btn btn-primary">Broadcast</button>
+    </div>
+</div>
+@Scripts.Render("~/Scripts/p5.min.js")
+@Scripts.Render("~/Scripts/jquery.signalR-2.3.0.min.js")
+@Scripts.Render("~/signalr/hubs")
+@Scripts.Render("~/Scripts/GamePlayer.js")

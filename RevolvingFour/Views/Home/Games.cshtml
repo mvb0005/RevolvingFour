@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Game";
+}
+<div class="container">
+    <div class="card-deck">
+        @foreach (var game in ViewBag.games)
+        {
+            @RenderPage("GamePreview.cshtml", new { Game = game });
+        }
+    </div>
+</div>
+@Scripts.Render("~/Scripts/p5.min.js")
+@Scripts.Render("~/Scripts/GamePreview.js")
