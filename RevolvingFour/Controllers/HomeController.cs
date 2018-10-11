@@ -35,6 +35,7 @@ namespace RevolvingFour.Controllers
         }
         public ActionResult GamePlayer()
         {
+            //ViewBag.Message = 
             return View();
         }
 

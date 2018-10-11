@@ -29,5 +29,8 @@ $(document).ready(function () {
             }
         };
         sketches.push(new p5(sketch, $('.card-header', card)[0]));
+        $('button', card).click(function () {
+            console.log(document.location.href = "GamePlayer/" + $(this).val());
+        })
     }
 });

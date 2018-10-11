@@ -5,5 +5,6 @@
         <input class="board" type="hidden" value=@Page.Game.Board>
         <h5 class="card-title text-uppercase">@Page.Game.Id.ToString().Split('-')[0]</h5>
         <p>@Page.Game.Last_Move_Date</p>
+        <button id="btn@Page.Game.Id" class="btn btn-primary" value=@Page.Game.Id>Play</button>
     </div>
 </div>
