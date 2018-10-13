@@ -21,7 +21,10 @@ namespace RevolvingFour
 
         public void UpdateGame(string roomName, string action)
         {
-            Clients.Group(roomName).updateGame(action);
+            if (roomName.Length > 0)
+            {
+                Clients.Group(roomName).updateGame(action);
+            }
         }
     }
 }
