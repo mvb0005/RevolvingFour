@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RevolvingFourDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="RevolvingFourGames">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Last_Move_Date" Type="datetime" Nullable="false" />
+          <Property Name="Player1_turn" Type="bit" Nullable="false" />
+          <Property Name="Board" Type="char" MaxLength="49" Nullable="false" />
+          <Property Name="Moves" Type="varchar(max)" Nullable="false" />
+          <Property Name="Status" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <Function Name="uspCountAllGames" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="retval" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="uspGetAllGames" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="RevolvingFourDBModelStoreContainer">
+          <EntitySet Name="RevolvingFourGames" EntityType="Self.RevolvingFourGames" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RevolvingFourDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="RevolvingFourGame">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Last_Move_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Player1_turn" Type="Boolean" Nullable="false" />
+          <Property Name="Board" Type="String" MaxLength="49" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Moves" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="RevolvingFourGames" EntityType="Self.RevolvingFourGame" />
+          <FunctionImport Name="uspCountAllGames">
+          <Parameter Name="retval" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="uspGetAllGames" EntitySet="RevolvingFourGames" ReturnType="Collection(RevolvingFourDBModel.RevolvingFourGame)" />
+        </EntityContainer>
+        <ComplexType Name="uspCountAllGames_Result">
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="Last_Move_Date" Nullable="false" Precision="23" />
+          <Property Type="Boolean" Name="Player1_turn" Nullable="false" />
+          <Property Type="String" Name="Board" Nullable="false" MaxLength="49" />
+          <Property Type="String" Name="Moves" Nullable="false" />
+          <Property Type="Byte" Name="Status" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="uspGetAllGames_Result">
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="Last_Move_Date" Nullable="false" Precision="23" />
+          <Property Type="Boolean" Name="Player1_turn" Nullable="false" />
+          <Property Type="String" Name="Board" Nullable="false" MaxLength="49" />
+          <Property Type="String" Name="Moves" Nullable="false" />
+          <Property Type="Byte" Name="Status" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="uspCountAllGames_Result1">
+          <Property Type="Int32" Name="retval" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RevolvingFourDBModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="RevolvingFourGames">
+            <EntityTypeMapping TypeName="RevolvingFourDBModel.RevolvingFourGame">
+              <MappingFragment StoreEntitySet="RevolvingFourGames">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Last_Move_Date" ColumnName="Last_Move_Date" />
+                <ScalarProperty Name="Player1_turn" ColumnName="Player1_turn" />
+                <ScalarProperty Name="Board" ColumnName="Board" />
+                <ScalarProperty Name="Moves" ColumnName="Moves" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="uspCountAllGames" FunctionName="RevolvingFourDBModel.Store.uspCountAllGames">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="uspGetAllGames" FunctionName="RevolvingFourDBModel.Store.uspGetAllGames">
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

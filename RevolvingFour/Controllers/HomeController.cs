@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -42,20 +43,20 @@ namespace RevolvingFour.Controllers
 
         public ActionResult Games(int page = 1)
         {
-            
-            var dbContext = new RevolvingFourGameDBContext();
-            var retval = new SqlParameter("retval", System.Data.SqlDbType.Int);
-            retval.Direction = System.Data.ParameterDirection.Output;
-            var test = dbContext.Database.ExecuteSqlCommand("EXEC dbo.uspCountAllGames @retval output", retval);
 
-            ViewBag.Page = retval.Value;
-            var games = from g in dbContext.Games orderby g.Last_Move_Date descending select g;
-            ViewBag.games = games.ToList();
-            return View();
+            using (var dbContext = new Entities())
+            {
+                var retval = new ObjectParameter("retval", typeof(int));
+                var res1 = dbContext.uspCountAllGames(retval);
+                var res = dbContext.uspGetAllGames();
+                ViewBag.games = res.ToList();
+                ViewBag.Page = retval.Value;
+                return View();
+            }
         }
         public ActionResult AddGame()
         {
-            var dbContext = new RevolvingFourGameDBContext();
+            var dbContext = new Entities();
             var random = new Random();
             var randomBoard = "";
             for (var i = 0; i < 49; i++)
@@ -71,14 +72,14 @@ namespace RevolvingFour.Controllers
                 Moves = "",
                 Status = (byte)random.Next(0, 255)
             };
-            dbContext.Games.Add(game);
+            dbContext.RevolvingFourGames.Add(game);
             dbContext.SaveChanges();
             return Json(game, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetBoard(Guid? id)
         {
-            var dbContext = new RevolvingFourGameDBContext();
-            var game = from g in dbContext.Games where g.Id == id select g;
+            var dbContext = new Entities();
+            var game = from g in dbContext.RevolvingFourGames where g.Id == id select g;
             if (game.Count() == 1)
             {
                 return Json(game.First(), JsonRequestBehavior.AllowGet);

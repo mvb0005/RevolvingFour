@@ -11,7 +11,7 @@ AS
 	SELECT *
 	FROM dbo.RevolvingFourGames
 	ORDER BY Last_Move_Date
-	OFFSET 20 ROWS
+	OFFSET 15 ROWS
 	FETCH NEXT 10 ROWS ONLY;
 GO
 
@@ -19,10 +19,9 @@ IF OBJECT_ID ('dbo.uspCountAllGames', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.uspCountAllGames;
 GO
 
-CREATE PROCEDURE dbo.uspCountAllGames
-@retval int output
+CREATE PROCEDURE dbo.uspCountAllGames (@retval int output)				
 AS
 	SET NOCOUNT ON;
-	SELECT @retval = (*)
+	SELECT @retval = Count(*)
 	FROM dbo.RevolvingFourGames;
 GO

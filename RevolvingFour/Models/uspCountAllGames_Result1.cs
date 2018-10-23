@@ -10,15 +10,9 @@
 namespace RevolvingFour.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class RevolvingFourGame
+    public partial class uspCountAllGames_Result1
     {
-        public System.Guid Id { get; set; }
-        public System.DateTime Last_Move_Date { get; set; }
-        public bool Player1_turn { get; set; }
-        public string Board { get; set; }
-        public string Moves { get; set; }
-        public byte Status { get; set; }
+        public Nullable<int> retval { get; set; }
     }
 }
